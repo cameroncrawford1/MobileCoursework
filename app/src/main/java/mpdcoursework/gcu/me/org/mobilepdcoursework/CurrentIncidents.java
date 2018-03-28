@@ -31,9 +31,10 @@ public class CurrentIncidents extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.currentincidents_layout);
         //This function provides an underline on the title of the page
-        txtView = (TextView) findViewById(R.id.textView);
-        txtView.setPaintFlags(txtView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-
+        //txtView = (TextView) findViewById(R.id.textView);
+        //txtView.setPaintFlags(txtView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        //Sets the title of the action bar
+        getSupportActionBar().setTitle("Current Incidents");
         incidentsListView = (ListView) findViewById(R.id.incidentsListView);
         //The data is parsed from the main activity is taken through the incidents page
         incidentList = (ArrayList<DetailsClass>)getIntent().getSerializableExtra("incidentsList");
@@ -64,6 +65,7 @@ public class CurrentIncidents extends AppCompatActivity {
                 intent.putExtra("comments", traffic.getComments());//Isnt used
                 intent.putExtra("pubDate", traffic.getPubDate());//Isnt used
                 startActivity(intent);
+                getSupportActionBar().setTitle("Current Incidents");
             }
         });
         //This is the code which allows a back button to be placed on the toolbar

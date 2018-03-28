@@ -39,9 +39,9 @@ public class RoadworksPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.roadworkspage_layout);
         //This function is used to provide an underline on the textview that displays the heading
-        txtView = (TextView) findViewById(R.id.textView);
-        txtView.setPaintFlags(txtView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-
+        //txtView = (TextView) findViewById(R.id.textView);
+        //txtView.setPaintFlags(txtView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        getSupportActionBar().setTitle("Planned Roadworks");
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         //Assigning the buttons to the appopriate variables, this will be used later
         //to provide functionality to these buttons through
@@ -78,6 +78,7 @@ public class RoadworksPage extends AppCompatActivity {
                 intent.putExtra("comments", roadworksItem.getComments());
                 intent.putExtra("pubDate", roadworksItem.getPubDate());
                 startActivity(intent);
+                getSupportActionBar().setTitle("Planned Roadworks");
             }
         });
         //This is the item list of the results of what the user has searched
@@ -101,6 +102,7 @@ public class RoadworksPage extends AppCompatActivity {
                 intent.putExtra("comments", resultItem.getComments());
                 intent.putExtra("pubDate", resultItem.getPubDate());
                 startActivity(intent);
+                getSupportActionBar().setTitle("Planned Roadworks");
             }
         });
 

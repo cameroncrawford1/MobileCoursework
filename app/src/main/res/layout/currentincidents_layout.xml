@@ -12,24 +12,15 @@
     android:background="#FF7F50"
     tools:context="mpdcoursework.gcu.me.org.mobilepdcoursework.CurrentIncidents">
 
-    <TextView
-        style="@style/HeaderTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Current Incidents"
-        android:id="@+id/textView"
-        android:textStyle="bold"
-        android:textSize="24dp"
-        android:gravity="center"/>
-
     <ListView
         android:id="@+id/incidentsListView"
         android:layout_width="364dp"
         android:layout_height="400dp"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="69dp"
-        android:layout_below="@+id/textView"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true">
     </ListView>
 </RelativeLayout>

@@ -6,11 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.content.Context;
+import android.widget.Toast;
 import android.util.Xml;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-
+import android.net.ConnectivityManager;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
@@ -22,15 +24,17 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
+
+
     private ArrayList<DetailsClass> incidentResultsList;
     private ArrayList<DetailsClass> roadworksResultsList;
-
+    //The RSS feeds of each of the options are displayed below
     private String roadworksBtnURL ="http://trafficscotland.org/rss/feeds/plannedroadworks.aspx";
     private String incidentsBtnURL ="http://trafficscotland.org/rss/feeds/currentincidents.aspx";
 
     private ArrayAdapter<DetailsClass> incidentAdapter;
     private ArrayAdapter<DetailsClass> roadworksAdapter;
-
+    //The buttons are initialised
     private Button btnIncidents;
     private Button btnRoadworks;
 
@@ -56,6 +60,13 @@ public class MainActivity extends AppCompatActivity {
                 myIntent.putExtra("incidentsList", incidentResultsList);
                 MainActivity.this.startActivity(myIntent);
 
+                if(!checkIfConnected()){
+                    Toast.makeText(getApplicationContext(),
+                            "No Internet connection found",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
             }});
         //This is the button which displays the roadworks for the app
         btnRoadworks.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +78,13 @@ public class MainActivity extends AppCompatActivity {
                 Intent myIntent = new Intent(MainActivity.this, RoadworksPage.class);
                 myIntent.putExtra("roadworksList", roadworksResultsList);
                 MainActivity.this.startActivity(myIntent);
+
+                if(!checkIfConnected()){
+                    Toast.makeText(getApplicationContext(),
+                            "No Internet connection found",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }});
     }
 
@@ -160,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
                         continue;
                     }
                 }
-                Log.d("MainActivity", "Parsing ==> " + name);
+                //Log.d("MainActivity", "Parsing... " + name);
                 String textResultFromParser = "";
                 if (xmlPullParser.next() == XmlPullParser.TEXT) {
                     //Gets the text from each tag
@@ -217,6 +235,16 @@ public class MainActivity extends AppCompatActivity {
             return items;
         } finally {
             inputStream.close();
+        }
+    }
+    public boolean checkIfConnected(){
+        try {
+            ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnectedOrConnecting();
+        }
+        //When the attempt fails, no internet connection was found
+        catch(Exception ex){
+            return false;
         }
     }
 }
