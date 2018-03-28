@@ -9,6 +9,13 @@
     android:background="#A1CAF1"
     tools:context="mpdcoursework.gcu.me.org.mobilepdcoursework.RoadworksPage">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Red = more than 7 Days, Yellow = 2 - 6, Green = 1"
+        android:textStyle="bold"
+        android:id="@+id/textView" />
+
     <EditText
         android:id="@+id/enterNameTxt"
         android:layout_width="wrap_content"
@@ -16,9 +23,9 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:hint="Please Enter a Road"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
         android:layout_marginTop="13dp"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentStart="true"
         android:layout_toStartOf="@+id/getRoadworkBtn" />
 
     <Button

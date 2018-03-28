@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(!checkIfConnected()){
                     Toast.makeText(getApplicationContext(),
-                            "No Internet connection found",
+                            "No Internet connection found, the current feed will not be live!",
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -76,10 +76,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent myIntent = new Intent(MainActivity.this, RoadworksPage.class);
                 myIntent.putExtra("roadworksList", roadworksResultsList);
                 MainActivity.this.startActivity(myIntent);
-
+                //Checks the connection medthod, if there is no connection
+                //returned, then the error message is displayed
                 if(!checkIfConnected()){
                     Toast.makeText(getApplicationContext(),
-                            "No Internet connection found",
+                            "No Internet connection found, the current feed will not be live!",
                             Toast.LENGTH_SHORT).show();
                     return;
                 }

@@ -32,7 +32,6 @@ public class RoadworksPage extends AppCompatActivity {
     private EditText enterNameTxt;
     private ListView roadworksListview;
     private ListView resultView;
-    private TextView txtView;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
