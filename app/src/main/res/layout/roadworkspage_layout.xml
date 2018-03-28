@@ -8,6 +8,10 @@
     android:background="#A1CAF1"
     tools:context="mpdcoursework.gcu.me.org.mobilepdcoursework.RoadworksPage">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Red = more than "/>
     <EditText
         android:id="@+id/enterNameTxt"
         android:layout_width="wrap_content"

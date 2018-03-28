@@ -24,8 +24,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-
-
     private ArrayList<DetailsClass> incidentResultsList;
     private ArrayList<DetailsClass> roadworksResultsList;
     //The RSS feeds of each of the options are displayed below
@@ -88,56 +86,10 @@ public class MainActivity extends AppCompatActivity {
             }});
     }
 
-    public final class FetchFeedTask extends AsyncTask<Void, Void, Boolean> {
-
-        @Override
-        protected void onPreExecute() {
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... voids) {
-            String urlLink = incidentsBtnURL;
-            if (TextUtils.isEmpty(urlLink))
-                return false;
-            try {
-                //This statement checks the url of the button that is selected
-                //It then checks the url to see if it starts with anything other than http
-                //If they are different then the url is changes to include before searching
-                if(!urlLink.startsWith("http://") && !urlLink.startsWith("https://"))
-                    urlLink = "http://" + urlLink;
-
-                URL url = new URL(incidentsBtnURL);
-                InputStream inputStream = url.openConnection().getInputStream();
-                incidentResultsList = MainActivity.pullParse(inputStream);
-
-                URL url2 = new URL(roadworksBtnURL);
-                InputStream inputStream1 = url2.openConnection().getInputStream();
-                roadworksResultsList = MainActivity.pullParse(inputStream1);
-                return true;
-            } catch (IOException e) {
-                Log.e(TAG, "Error", e);
-            } catch (XmlPullParserException e) {
-                Log.e(TAG, "Error", e);
-            }
-            return false;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean success) {
-
-            if (success) {
-                //A recycler view is used to fill when one selection has been made
-                incidentAdapter = new displayArrayAdapter(MainActivity.this, 0, incidentResultsList);
-                roadworksAdapter = new displayArrayAdapter(MainActivity.this, 0, roadworksResultsList);
-            } else {
-
-            }
-        }
-    }
     //This method is where the data from the rss feeds are parsed to the application and then
     //the data is stored, the data stored can then be manipulated to be displayed on the screen
     //This will then create a structure in which the application can display the information
-    public static ArrayList<DetailsClass> pullParse(InputStream inputStream) throws XmlPullParserException, IOException {
+    public static ArrayList<DetailsClass> pullParse(InputStream inputCollected) throws XmlPullParserException, IOException {
         String title = null;
         String link = null;
         String description = null;
@@ -152,9 +104,10 @@ public class MainActivity extends AppCompatActivity {
         try {
             //The pull parser is initiated
             XmlPullParser xmlPullParser = Xml.newPullParser();
+            xmlPullParser.setInput(inputCollected, null);
             xmlPullParser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-            xmlPullParser.setInput(inputStream, null);
-            //Goes through the xml tags, retreiving the data
+
+            //Goes through the xml tags, retrieving the data
             xmlPullParser.nextTag();
             while (xmlPullParser.next() != XmlPullParser.END_DOCUMENT) {
                 int getTypeforResults = xmlPullParser.getEventType();
@@ -178,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
                         continue;
                     }
                 }
-                //Log.d("MainActivity", "Parsing... " + name);
                 String textResultFromParser = "";
                 if (xmlPullParser.next() == XmlPullParser.TEXT) {
                     //Gets the text from each tag
@@ -234,9 +186,57 @@ public class MainActivity extends AppCompatActivity {
             }
             return items;
         } finally {
-            inputStream.close();
+            inputCollected.close();
         }
     }
+
+    public final class FetchFeedTask extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            String urlLink = incidentsBtnURL;
+            if (TextUtils.isEmpty(urlLink))
+                return false;
+            try {
+                //This statement checks the url of the button that is selected
+                //It then checks the url to see if it starts with anything other than http
+                //If they are different then the url is changes to include before searching
+                if(!urlLink.startsWith("http://") && !urlLink.startsWith("https://"))
+                    urlLink = "http://" + urlLink;
+
+                URL url = new URL(incidentsBtnURL);
+                InputStream inputStream = url.openConnection().getInputStream();
+                incidentResultsList = MainActivity.pullParse(inputStream);
+
+                URL url2 = new URL(roadworksBtnURL);
+                InputStream inputStream1 = url2.openConnection().getInputStream();
+                roadworksResultsList = MainActivity.pullParse(inputStream1);
+                return true;
+            } catch (IOException e) {
+                Log.e(TAG, "Error", e);
+            } catch (XmlPullParserException e) {
+                Log.e(TAG, "Error", e);
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+
+            if (success) {
+                //A recycler view is used to fill when one selection has been made
+                incidentAdapter = new displayArrayAdapter(MainActivity.this, 0, incidentResultsList);
+                roadworksAdapter = new displayArrayAdapter(MainActivity.this, 0, roadworksResultsList);
+            } else {
+
+            }
+        }
+    }
+
     public boolean checkIfConnected(){
         try {
             ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

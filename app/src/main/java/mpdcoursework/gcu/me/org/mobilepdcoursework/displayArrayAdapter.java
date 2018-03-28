@@ -63,9 +63,10 @@ class displayArrayAdapter extends ArrayAdapter<DetailsClass> implements Serializ
                 if (differenceInDays != 1) {
                     differenceInDays = differenceInDays + 1;
                 }
+                //Checks the difference between days and color coordinates the list view
                 if (differenceInDays <= 1) {
                     view.setBackgroundColor(Color.parseColor("#A4C639"));
-                } else if(differenceInDays >= 1 && differenceInDays <= 3) {
+                } else if(differenceInDays >= 1 && differenceInDays <= 6) {
                     view.setBackgroundColor(Color.parseColor("#FDFD96"));
                 }
                 else
