@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- S1628376 Cameron Crawford -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/roadworks_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#A1CAF1"
+    tools:context="mpdcoursework.gcu.me.org.mobilepdcoursework.RoadworksPage">
+
+    <TextView
+        style="@style/HeaderTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Planned Roadworks"
+        android:id="@+id/textView"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:textStyle="bold"
+        android:textSize="24dp"
+        android:gravity="center"/>
+
+    <EditText
+        android:id="@+id/enterNameTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Please Enter a Road"
+        android:layout_above="@+id/selectedListView"
+        android:layout_alignParentStart="true"
+        />
+
+    <Button
+        android:id="@+id/getRoadworkBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/enterNameTxt"
+        android:layout_toEndOf="@+id/enterNameTxt"
+        android:background="#F9E79F"
+        android:text="Search"
+        android:textStyle="bold"/>
+
+    <ListView
+        android:id="@+id/roadworksListView"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="86dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="69dp">
+    </ListView>
+
+    <ListView
+        android:id="@+id/selectedListView"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:layout_alignTop="@+id/roadworksListView"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="69dp">
+    </ListView>
+</RelativeLayout>
